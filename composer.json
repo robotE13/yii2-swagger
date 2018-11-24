@@ -1,19 +1,23 @@
 {
   "name": "light/yii2-swagger",
-  "description": "swagger intergation with yii2",
+  "description": "OpenApi (ex. Swagger) intergation with yii2",
   "type": "library",
-  "keywords": ["yii2","extension","swagger","Restful","document"],
+  "keywords": ["yii2", "extension", "openapi", "swagger", "restful", "documentation"],
   "license": "MIT",
   "authors": [
     {
       "name": "lichunqiang",
       "email": "light-li@hotmail.com"
+    },
+    {
+      "name": "Evgenii Dudal",
+      "email": "wolfstrace@gmail.com"
     }
   ],
   "require": {
-    "yiisoft/yii2": "^2.0.0",
+    "yiisoft/yii2": "^2.0.14",
     "zircote/swagger-php": "^3.0",
-    "bower-asset/swagger-ui": "^3.0.18"
+    "bower-asset/swagger-ui": "^3.18.0"
   },
   "minimum-stability": "dev",
   "autoload": {
