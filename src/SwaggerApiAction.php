@@ -72,26 +72,26 @@ class SwaggerApiAction extends Action
      * [[cache]] must not be null
      */
     public $cacheKey = 'api-swagger-cache';
-    
+
     /**
      * @throws \yii\base\InvalidConfigException
      */
     public function init()
     {
         $this->cache = Instance::ensure($this->cache, CacheInterface::class);
-    
+
         $this->initCors();
     }
-    
+
     /**
      * @inheritdoc
      */
     public function run()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        
+
         $this->clearCache();
-        
+
         if ($this->enableCache) {
             if (($swagger = $this->cache->get($this->cacheKey)) === false) {
                 $swagger = $this->getSwagger();
@@ -100,17 +100,17 @@ class SwaggerApiAction extends Action
         } else {
             $swagger = $this->getSwagger();
         }
-        
+
         return $swagger;
     }
-    
+
     /**
      * Init cors.
      */
     protected function initCors()
     {
         $headers = Yii::$app->getResponse()->getHeaders();
-        
+
         $headers->set('Access-Control-Allow-Headers', implode(', ', [
             'Content-Type',
             $this->apiKeyParam,
@@ -119,7 +119,7 @@ class SwaggerApiAction extends Action
         $headers->set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
         $headers->set('Access-Control-Allow-Origin', '*');
     }
-    
+
     /**s
      *
      * @throws \yii\base\InvalidConfigException
@@ -130,19 +130,19 @@ class SwaggerApiAction extends Action
         $clearCache = Yii::$app->getRequest()->get('clear-cache', false);
         if ($clearCache !== false) {
             $this->cache->delete($this->cacheKey);
-            
+
             Yii::$app->response->content = 'Succeed clear swagger api cache.';
             Yii::$app->end();
         }
     }
-    
+
     /**
-     * Get swagger object
+     * Get OpenApi object
      *
-     * @return \Swagger\Annotations\Swagger
+     * @return \OpenApi\Annotations\OpenApi
      */
     protected function getSwagger()
     {
-        return \Swagger\scan($this->scanDir, $this->scanOptions);
+        return \OpenApi\scan($this->scanDir, $this->scanOptions);
     }
 }
